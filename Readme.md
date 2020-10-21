@@ -52,9 +52,42 @@ To mimick Super Mario Bros we need to add a button to increase speed for our lon
 		}
 		```
 
-## Adding UI Elements
+## Adding UI Elements and introducing the Game Manager
+1. Right click in the Hierarchy and add UI -> Text
+	1. In the inspector change ```New Text``` to ```Lives = 0```  
+2. Create a new script called ```GameManager```
+3. Open the GameManager Script
+4. Remove the Start() and Update() Methods
+5. Add a public lives variable and default it to 3 lives;
+	- ```cs
+		public int lives = 3;
+		```
+6. Add an Empty GameObject to the scene and name it GameManager
+7. Drag the GameManager Script into the GameManger GameObject
+8. Create a new script called UIText
+9. Drag the UIText script to the GameManager 
+10. Drag ```Text``` from underneath Canvas to the ```Lives Text`` in the GameManager Inspector
+11. Open the UIText Script
+12. Add
+	- ```cs
+		public Text livesText;
+		private GameObject gameManager;
+		private int lives;
+		
+		void Start()
+		{
+			gameManager = this.gameObject;
+			lives = gameManager.GetComponent<GameManager>().getLives(); 
+		}
 
-## Giving the PlayerLives
+		void Update()
+		{
+			lives = gameManager.GetComponent<GameManager>().getLives();
+			livesText.text = "Lives = " + lives;
+		}
+		```
+
+## Killing the player
 
 ## Respawning the player and Restarting the Level
 
