@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed;
+    public float walkingSpeed = 5f;
+    public float runningMultiplier = 2f;
     public float jumpForce;
     
 
@@ -13,11 +15,13 @@ public class PlayerMovement : MonoBehaviour
 
     private float moveDirection;
     private bool isJumping = false;
+	
 
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
+        moveSpeed = walkingSpeed;
         rb = GetComponent<Rigidbody2D>();
 
     }
@@ -52,6 +56,18 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
             isJumping = true;
+        }
+
+        if (Input.GetButtonDown("Fire1"))  // NOTE: When using Fire1 add z as an alternate positive button
+        {
+            // if the Fire1 button is pressed increase moveSpeed temporarially
+            moveSpeed *= runningMultiplier;
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            // when the Fire1 button is released return moveSpeed to it's original value
+            moveSpeed = walkingSpeed;
         }
     }
 
