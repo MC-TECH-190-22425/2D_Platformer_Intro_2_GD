@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] 
+    private LayerMask enemyLayerMask;
     public float moveSpeed = 5f;
     public float jumpForce;
     
@@ -55,9 +57,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Check if Grounded
     private bool IsGrounded()
     {
 
         return transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
+    }
+
+    //  Is the Player Touching something
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        // Check to see if the player is touching the enemy
+        if(collider.CompareTag("Enemy"))
+        {
+            Debug.Log("The player is touching " + collider.tag );
+        }
     }
 }

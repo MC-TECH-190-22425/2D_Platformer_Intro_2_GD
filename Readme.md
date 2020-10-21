@@ -26,8 +26,37 @@ To mimick Super Mario Bros we need to add a button to increase speed for our lon
 		```
 	- Add z as an alternate positive button for **Fire1** in the Axis Controls
 
-
 ## Adding Enemies
+1. From sprites lets bring out another square
+2. Change the color of the sprite
+3. Change the name from square to Enemy
+4. Add an empty gameObject as a child of Enemy
+5. Name the gameObject Hitbox
+6. Add a BoxCollider2D to the Hitbox
+	1. Reduce it's size to .08 on all sides
+	2. Make sure that Is Trigger is checked
+7. Add a BoxCollider2D to the Enemy
+8. With the Hitbox selected click the dropdown next to Tag in the inspector and select "add tag"
+9. Add ```Enemy``` to the tag list
+10. Select the Enemy tag
+11. Open the PlayerMovement Script
+12. After IsGrounded() Add
+	- ```cs
+		void OnTriggerEnter2D(Collider2D collider)
+		{
+			// Check to see if the player is touching the enemy
+			if(collider.CompareTag("Enemy"))
+			{
+				Debug.Log("The player is touching " + collider.tag );
+			}
+		}
+		```
+
+## Adding UI Elements
+
+## Giving the PlayerLives
+
+## Respawning the player and Restarting the Level
 
 ## Giving Enemies AI
 
