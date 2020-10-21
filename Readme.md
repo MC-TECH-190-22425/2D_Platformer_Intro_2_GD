@@ -1,6 +1,39 @@
-# October 15th 2020
+# October 22th 2020
 
-# October 8th 2020
+## Adding Speed
+
+To mimick Super Mario Bros we need to add a button to increase speed for our longer jumps.
+
+1. Open the PlayerMovement Script
+2. Add
+	- ```public float walkingSpeed = 5f```
+	- ```public float runningMultiplier = 2f```
+	- and remove the 5f value from moveSpeed
+3. In ```void ProcessInputs()``` add the following conditionals
+	- ```cs
+	    if (Input.GetButtonDown("Fire1"))  
+        {
+            // if the Fire1 button is pressed increase moveSpeed temporarially
+            moveSpeed *= runningMultiplier;
+        }
+		```
+	- ```cs
+		if (Input.GetButtonUp("Fire1"))
+        {
+            // when the Fire1 button is released return moveSpeed to it's original value
+            moveSpeed = walkingSpeed;
+        }
+		```
+	- Add z as an alternate positive button for **Fire1** in the Axis Controls
+
+
+## Adding Enemies
+
+## Giving Enemies AI
+
+## Adding PowerUps
+
+## Adding Scene Transitions
 
 ## Starting Git from an existing Unity Project
 
