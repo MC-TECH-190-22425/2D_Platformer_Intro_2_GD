@@ -1,5 +1,15 @@
 # October 22th 2020
 
+## Giving Enemies AI
+
+## Killing the player
+
+## Respawning the player and Restarting the Level
+
+## Adding PowerUps
+
+## Adding Scene Transitions
+
 ## Adding Speed
 
 To mimick Super Mario Bros we need to add a button to increase speed for our longer jumps.
