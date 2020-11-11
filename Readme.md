@@ -1,6 +1,49 @@
 # October 22th 2020
 
 ## Giving Enemies AI
+1. Add a rigidbody 2D to the enemy
+2. Add a BoxCollider2D to the enemy
+2. In the rigidbody property
+	1. Expand `Constraints` by clicking the triangle to the right
+	2. Check the box next to Freeze Rotation
+		1. This will make sure the Enemy doesn't rotate unexpectedly
+4. Create a new Tag called `Enviornment`
+2. Create a new C# script named `Enemy`
+3. Open the Enemy script and remove the Start and Update methods
+4. Paste this code:
+	```cs
+    private Rigidbody2D body;
+
+    [SerializeField]
+    private float speed;
+    private Vector2 movementDirection;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+        movementDirection = Vector2.left; // starts this enemy off moving right
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Move(movementDirection);
+    }
+
+    public void Move(Vector2 direction)
+    {
+        movementDirection = direction;
+        body.velocity = new Vector2(direction.x * speed, body.velocity.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Environment"))
+        {
+            movementDirection *= -1f;
+        }
+    }
+	```
 
 ## Killing the player
 

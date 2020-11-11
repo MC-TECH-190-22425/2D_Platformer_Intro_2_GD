@@ -8,12 +8,12 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private float speed;
-
-    public Vector2 movementDirection = Vector2.right;
-
+    private Vector2 movementDirection;
+    // Start is called before the first frame update
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        movementDirection = Vector2.left; // starts this enemy off moving right
     }
 
     // Update is called once per frame
@@ -30,10 +30,9 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Environment"))
+        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Environment"))
         {
             movementDirection *= -1f;
         }
-        
     }
 }
