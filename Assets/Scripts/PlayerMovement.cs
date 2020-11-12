@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gameManager;
+
     [SerializeField] 
     private LayerMask enemyLayerMask;
+
     public float moveSpeed = 5f;
     public float jumpForce;
     
@@ -67,10 +71,27 @@ public class PlayerMovement : MonoBehaviour
     //  Is the Player Touching something
     void OnTriggerEnter2D(Collider2D collider)
     {
+        GameObject currentGameObject = collider.GetComponent<GameObject>();
         // Check to see if the player is touching the enemy
         if(collider.CompareTag("Enemy"))
         {
             Debug.Log("The player is touching " + collider.tag );
         }
+
+        //if (collider.CompareTag("Coin"))
+        //{
+        //    Debug.Log("The player is touching " + collider.tag);
+
+        //    // Increase Coin counter
+        //    gameManager.addCoin();
+
+        //    // Destroy Coin
+        //    currentGameObject.SetActive(false);
+        //}
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 }
