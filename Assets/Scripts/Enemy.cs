@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D body;
 
     [SerializeField]
-    private float speed;
+    private float speed = 3;
     private Vector2 movementDirection;
     // Start is called before the first frame update
     void Awake()

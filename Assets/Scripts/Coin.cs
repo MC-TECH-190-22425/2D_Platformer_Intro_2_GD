@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    GameManager gameManager;
+    // Create a reference for the Game Manager
+    private GameManager gameManager;
 
+    // Create a standard score for coins
     [SerializeField]
     int coinPoints = 100;
 
+    // Do these actions when this item is awakened in the scene
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();  // Assign the gameManger to the gameManager variable when this item awakens in a scene
+        // Assign the GameManger in this scene to the gameManager variable
+        gameManager = FindObjectOfType<GameManager>(); 
     }
 
+    // Do these actions when the trigger on this item is entered
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("The player is touching " + GetComponent<Collider2D>().tag);
@@ -24,7 +29,7 @@ public class Coin : MonoBehaviour
         // Increase Score
         gameManager.addScore(coinPoints);
 
-        // Destroy Coin
+        // Set Coin to inactive, visibly removing the item from the screen but not destroying it completely.
         gameObject.SetActive(false);
     }
 }

@@ -1,7 +1,5 @@
 # November 12 2020
 
-
-
 ## Collectables and Scoring
 1. Add two new text fields to the Canvas
 2. Name them CoinsText and ScoreText
