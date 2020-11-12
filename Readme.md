@@ -147,7 +147,7 @@ Other powerups include the fire flower the 1UP mushroom and the invincibility st
 
 #### Implementing Player Growth
 
-#### Changing Mushroom blocks to FireFlower Blocks
+#### Mushroom Blocks
 We haven't even implemented a mushroom block yet, but we have completed most of the elements to create one.  For homework I would like to see you try to implement a mushroom block. It should:
 
 1. When hit by the player instantiate a mushroom sprite (doesn't need to look like a mushroom unless you want it to)
