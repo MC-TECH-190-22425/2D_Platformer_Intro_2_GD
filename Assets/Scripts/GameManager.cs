@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Variables
     [SerializeField]
     private int lives = 3;
 
@@ -13,14 +14,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int coins;
 
-
+    // Methods or Functions
 
     public int getLives()
     {
         return this.lives;
     }
-
-    // 20201112
 
     public int getScore()
     {
@@ -32,22 +31,20 @@ public class GameManager : MonoBehaviour
         return this.coins;
     }
 
-    // Function to add an extra life 
     public void addLife()
     {
-        lives++;
+        lives++;  // add +1 to lives
     }
 
-    // add a coin and check if enough coins have been collected for an extra life
     public void addCoin()
     {
-        coins++;
-        if (coins > 99)
+        coins++; // add +1 to coins
+
+        if(coins > 99)
         {
             addLife(); // add an extra life
             coins = 0; // reset coins to zero
         }
-
     }
 
     public void addScore(int points)

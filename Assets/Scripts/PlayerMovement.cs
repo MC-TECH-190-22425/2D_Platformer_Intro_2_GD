@@ -76,6 +76,14 @@ public class PlayerMovement : MonoBehaviour
         if(collider.CompareTag("Enemy"))
         {
             Debug.Log("The player is touching " + collider.tag );
+
+            // Reduce Players HitPoints
+
+            // Check if the player is dead
+
+            // Reduce a life
+
+            // Respawn Player or Restart the level
         }
 
         //if (collider.CompareTag("Coin"))

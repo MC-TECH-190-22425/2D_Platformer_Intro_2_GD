@@ -9,27 +9,34 @@ public class Coin : MonoBehaviour
 
     // Create a standard score for coins
     [SerializeField]
-    int coinPoints = 100;
+    private int coinPoints = 100;
 
-    // Do these actions when this item is awakened in the scene
+    // Do some Action(s) when the item that this script is on is awakened in the scene
     private void Awake()
     {
-        // Assign the GameManger in this scene to the gameManager variable
-        gameManager = FindObjectOfType<GameManager>(); 
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Do these actions when the trigger on this item is entered
+    // Do some Action when the trigger on this item is entered
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("The player is touching " + GetComponent<Collider2D>().tag);
+        //Coin says it was touched by a coin
+        Debug.Log("This coin was touched by " + collision.tag);
 
-        // Increase Coin counter
-        gameManager.addCoin();
+        //Check for player tag
+        if (collision.CompareTag("Player"))
+        {
+            // Increase Coin Counter
+            gameManager.addCoin();
 
-        // Increase Score
-        gameManager.addScore(coinPoints);
+            // Increase Score
+            gameManager.addScore(coinPoints);
 
-        // Set Coin to inactive, visibly removing the item from the screen but not destroying it completely.
-        gameObject.SetActive(false);
+            // Set this Coin to inactive, visibly removes the object from the scene without destroying it.
+            gameObject.SetActive(false);
+        }
+        
+
     }
+
 }
