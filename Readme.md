@@ -3,13 +3,94 @@
 ## Player Prefs
 https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 
-- Set Player Prefs
+- Set and GetPlayer Prefs
+	1. In GameManager add the following Awake Method
+	```cs
+	private void Awake()
+	{
+		// Check if this is the first run either create the PlayerPrefs or
+		// Set the UI to the existing PlayerPrefs
+		if (!PlayerPrefs.HasKey("lives"))
+		{
+			PlayerPrefs.SetInt("lives", lives);
+		}
+		else
+		{
+			lives = PlayerPrefs.GetInt("lives");
+		}
+		if (!PlayerPrefs.HasKey("score"))
+		{
+			PlayerPrefs.SetInt("score", 0);
+		}
+		else
+		{
+			score = PlayerPrefs.GetInt("score");
+		}
+		if (!PlayerPrefs.HasKey("lives"))
+		{
+			PlayerPrefs.SetInt("coins", 0);
+		}
+		else
+		{
+			coins = PlayerPrefs.GetInt("coins");
+		}
 
-- Get Player Prefs
+		// if the Game is Over or lives are below 1 on Awake
+		if (isGameOver || lives < 1)
+		{
+			lives = 3;
+			coins = 0;
+			score = 0;
+			setGameOver(false);
+		}
+	}
+	```
 
 - Update Player Prefs
+	1. In Game Manager Update the following methods
+	```cs
+		public void addLife()
+		{
+			lives++;  // add +1 to lives
+			PlayerPrefs.SetInt("lives", lives);
+		}
 
+		public void removeLife()
+		{
+			lives--; // remove -1 from lives
+			gameOverCheck();
+			PlayerPrefs.SetInt("lives", lives);
+		}
+
+		public void addCoin()
+		{
+			coins++; // add +1 to coins
+			PlayerPrefs.SetInt("coins", coins);
+
+			if (coins > 99)
+			{
+				addLife(); // add an extra life
+				PlayerPrefs.SetInt("lives", lives);
+				coins = 0; // reset coins to zero
+				PlayerPrefs.SetInt("coins", coins);
+			}
+		}
+
+		public void addScore(int points)
+		{
+			score += points;
+			PlayerPrefs.SetInt("score", score);
+		}
+	```
 - Resetting Player Prefs
+	1. In Game Manager add
+	```cs
+		private void OnApplicationQuit()
+		{
+			// Removes All PlayerPrefs 
+			PlayerPrefs.DeleteAll();
+		}
+	```
 
 ## Player Death
 
@@ -52,6 +133,7 @@ https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 			if (gameObject.transform.position.y < -25)
 			{
 				this.transform.position = respawnPoint;  // Respawn the player at the respawn point
+				// SceneManager.LoadScene("SampleScene");
 				gameManager.removeLife(); // reduce lives count by 1
 			}
 		```
@@ -68,7 +150,7 @@ https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 
 
 ## Enemy Stomp
-
+https://youtu.be/CIGJ1woYnjc?t=268
 
 # November 12 2020
 

@@ -60,7 +60,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        this.transform.position = respawnPoint;
+        SceneManager.LoadScene("SampleScene");
+        //this.transform.position = respawnPoint;
         gameManager.removeLife();
     }
 
