@@ -3,6 +3,14 @@
 ## Player Prefs
 https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 
+- Set Player Prefs
+
+- Get Player Prefs
+
+- Update Player Prefs
+
+- Resetting Player Prefs
+
 ## Player Death
 
 ### Pitfalls
