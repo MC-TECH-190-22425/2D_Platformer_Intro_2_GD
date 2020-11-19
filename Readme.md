@@ -1,3 +1,67 @@
+# Novemeber 19 2020
+
+## Player Prefs
+https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
+
+## Player Death
+
+### Pitfalls
+
+#### Using Position.y
+
+1. Create a respawm point
+	1. Create an empty game object and name it respawn point
+	2. Give the game object an icon
+	3. Place the respawn point where you want the player to respawn
+1. Create an accessor method to remove a life from lives in the GameManager
+	1. Open GameManager script
+	1. Add `void gameOverCheck(){}`
+		1. ```cs
+			void gameOverCheck()
+			{
+				if (lives < 1)
+				{
+					Debug.Log("The Game is Over... Restarting Level");
+
+					// then restart the scene
+					SceneManger.LoadScene("SampleScene");
+				}
+			}
+		```
+	1. Add `void removeLife(){}`
+		1. ```cs 
+			void RemoveLife()
+			{
+				lives--;
+				gameOverCheck(); // Check to ensure we haven't reached a game over state
+			}
+		```
+1. Add Pitfall Logic
+	1. Open Player Movement Script
+	1. Create a new `private Vector2 respawnPoint`
+	1. Create a new `void yPositionPitfallDeath {}` 
+		1. ```cs
+			if (gameObject.transform.position.y < -25)
+			{
+				this.transform.position = respawnPoint;  // Respawn the player at the respawn point
+				gameManager.removeLife(); // reduce lives count by 1
+			}
+		```
+
+#### Using collider
+
+
+
+### Enemy Contact
+
+
+
+
+
+
+## Enemy Stomp
+
+
 # November 12 2020
 
 ## Collectables and Scoring

@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.WSA;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +39,12 @@ public class GameManager : MonoBehaviour
         lives++;  // add +1 to lives
     }
 
+    public void removeLife()
+    {
+        lives--; // remove -1 from lives
+        gameOverCheck();
+    }
+
     public void addCoin()
     {
         coins++; // add +1 to coins
@@ -50,5 +59,16 @@ public class GameManager : MonoBehaviour
     public void addScore(int points)
     {
         score += points;
+    }
+
+    void gameOverCheck()
+    {
+        if (lives < 1)
+        {
+            Debug.Log("The Game is Over... Restarting Level");
+
+            // then restart the scene
+            SceneManager.LoadScene("SampleScene");
+        } 
     }
 }

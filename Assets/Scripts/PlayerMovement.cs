@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] 
     private LayerMask enemyLayerMask;
+
+    [SerializeField]
+    private Vector2 respawnPoint;
 
     public float moveSpeed = 5f;
     public float jumpForce;
@@ -34,7 +38,30 @@ public class PlayerMovement : MonoBehaviour
         ProcessInputs();
 
         Move();
-        
+
+        yPositionPitfallDeath();
+
+        colliderPitfallDeath();
+    }
+
+    void colliderPitfallDeath()
+    {
+
+    }
+
+    void yPositionPitfallDeath()
+    {
+        //position.y implementation of pitfall death
+        if (gameObject.transform.position.y < -25)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        this.transform.position = respawnPoint;
+        gameManager.removeLife();
     }
 
     // Physics Movements
