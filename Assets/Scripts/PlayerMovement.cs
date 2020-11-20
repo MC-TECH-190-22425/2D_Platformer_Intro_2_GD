@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private GameManager gameManager;
+
+    public GameManager gameManager;
 
     [SerializeField] 
     private LayerMask enemyLayerMask;
@@ -19,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float moveDirection;
     private bool isJumping = false;
+
+    [SerializeField]
+    private GameObject playerRespawnPoint;
 
 
     // Start is called before the first frame update
@@ -69,37 +73,35 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //  Is the Player Touching something
-    void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        GameObject currentGameObject = collider.GetComponent<GameObject>();
+        
         // Check to see if the player is touching the enemy
         if(collider.CompareTag("Enemy"))
         {
             Debug.Log("The player is touching " + collider.tag );
-
-            // Reduce Players HitPoints
-
-            // Check if the player is dead
-
-            // Reduce a life
-
-            // Respawn Player or Restart the level
+            Die();
         }
 
-        //if (collider.CompareTag("Coin"))
-        //{
-        //    Debug.Log("The player is touching " + collider.tag);
-
-        //    // Increase Coin counter
-        //    gameManager.addCoin();
-
-        //    // Destroy Coin
-        //    currentGameObject.SetActive(false);
-        //}
+        if (collider.CompareTag("DeathZone"))
+        {
+            Debug.Log("Player hit the death zone");
+            Die();
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Die()
     {
-        
+        //this.transform.position = playerRespawnPoint.transform.position;
+        SceneManager.LoadScene("SampleScene");
+        gameManager.removeLife();
+    }
+
+    void yPositionPitfallDeath()
+    {
+        if(gameObject.transform.position.y < -10)
+        {
+            Die();
+        }
     }
 }
