@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    public GameManager gameManager;
+
+    [SerializeField] 
+    private LayerMask enemyLayerMask;
+
     public float moveSpeed = 5f;
     public float jumpForce;
     
@@ -13,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float moveDirection;
     private bool isJumping = false;
+
+    [SerializeField]
+    private GameObject playerRespawnPoint;
 
 
     // Start is called before the first frame update
@@ -55,9 +65,43 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Check if Grounded
     private bool IsGrounded()
     {
 
         return transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
+    }
+
+    //  Is the Player Touching something
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        
+        // Check to see if the player is touching the enemy
+        if(collider.CompareTag("Enemy"))
+        {
+            Debug.Log("The player is touching " + collider.tag );
+            Die();
+        }
+
+        if (collider.CompareTag("DeathZone"))
+        {
+            Debug.Log("Player hit the death zone");
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        //this.transform.position = playerRespawnPoint.transform.position;
+        SceneManager.LoadScene("SampleScene");
+        gameManager.removeLife();
+    }
+
+    void yPositionPitfallDeath()
+    {
+        if(gameObject.transform.position.y < -10)
+        {
+            Die();
+        }
     }
 }
