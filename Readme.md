@@ -1,3 +1,8 @@
+# Final Project
+## References
+- www.google.com : explaination
+- www.stackoverflow.com : explaination
+
 # November 12 2020
 
 ## Collectables and Scoring
