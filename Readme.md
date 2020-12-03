@@ -3,6 +3,144 @@
 - www.google.com : explaination
 - www.stackoverflow.com : explaination
 
+# December 3 2020
+https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
+
+## Set and GetPlayer Prefs
+	1. In GameManager add the following Awake Method
+	```cs
+	private void Awake()
+	{
+		// Check if this is the first run either create the PlayerPrefs or
+		// Set the UI to the existing PlayerPrefs
+		if (!PlayerPrefs.HasKey("lives"))
+		{
+			PlayerPrefs.SetInt("lives", lives);
+		}
+		else
+		{
+			lives = PlayerPrefs.GetInt("lives");
+		}
+		if (!PlayerPrefs.HasKey("score"))
+		{
+			PlayerPrefs.SetInt("score", 0);
+		}
+		else
+		{
+			score = PlayerPrefs.GetInt("score");
+		}
+		if (!PlayerPrefs.HasKey("lives"))
+		{
+			PlayerPrefs.SetInt("coins", 0);
+		}
+		else
+		{
+			coins = PlayerPrefs.GetInt("coins");
+		}
+
+		// if the Game is Over or lives are below 1 on Awake
+		if (isGameOver || lives < 1)
+		{
+			lives = 3;
+			coins = 0;
+			score = 0;
+			setGameOver(false);
+		}
+	}
+	```
+
+- Update Player Prefs
+	1. In Game Manager Update the following methods
+	```cs
+		public void addLife()
+		{
+			lives++;  // add +1 to lives
+			PlayerPrefs.SetInt("lives", lives);
+		}
+
+		public void removeLife()
+		{
+			lives--; // remove -1 from lives
+			gameOverCheck();
+			PlayerPrefs.SetInt("lives", lives);
+		}
+
+		public void addCoin()
+		{
+			coins++; // add +1 to coins
+			PlayerPrefs.SetInt("coins", coins);
+
+			if (coins > 99)
+			{
+				addLife(); // add an extra life
+				PlayerPrefs.SetInt("lives", lives);
+				coins = 0; // reset coins to zero
+				PlayerPrefs.SetInt("coins", coins);
+			}
+		}
+
+		public void addScore(int points)
+		{
+			score += points;
+			PlayerPrefs.SetInt("score", score);
+		}
+	```
+- Resetting Player Prefs
+	1. In Game Manager add
+	```cs
+		private void OnApplicationQuit()
+		{
+			// Removes All PlayerPrefs 
+			PlayerPrefs.DeleteAll();
+		}
+	```
+
+## Player Death
+
+### Pitfalls
+
+#### Using Position.y
+
+1. Create a respawm point
+	1. Create an empty game object and name it respawn point
+	2. Give the game object an icon
+	3. Place the respawn point where you want the player to respawn
+1. Create an accessor method to remove a life from lives in the GameManager
+	1. Open GameManager script
+	1. Add `void gameOverCheck(){}`
+		1. ```cs
+			void gameOverCheck()
+			{
+				if (lives < 1)
+				{
+					Debug.Log("The Game is Over... Restarting Level");
+
+					// then restart the scene
+					SceneManger.LoadScene("SampleScene");
+				}
+			}
+		```
+	1. Add `void removeLife(){}`
+		1. ```cs 
+			void RemoveLife()
+			{
+				lives--;
+				gameOverCheck(); // Check to ensure we haven't reached a game over state
+			}
+		```
+1. Add Pitfall Logic
+	1. Open Player Movement Script
+	1. Create a new `private Vector2 respawnPoint`
+	1. Create a new `void yPositionPitfallDeath {}` 
+		1. ```cs
+			if (gameObject.transform.position.y < -25)
+			{
+				this.transform.position = respawnPoint;  // Respawn the player at the respawn point
+				// SceneManager.LoadScene("SampleScene");
+				gameManager.removeLife(); // reduce lives count by 1
+			}
+		```
+
 # November 12 2020
 
 ## Collectables and Scoring
